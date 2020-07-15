@@ -1,10 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './theme-toggle.css';
+
+const LOCAL_STORAGE_THEME_KEY = 'theme';
 
 const ThemeToggle = React.memo(() => {
   const [checked, setChecked] = useState(false);
 
   const checkBoxRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const theme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
+    if (theme === 'dark') {
+      setChecked(true);
+    }
+  }, []);
 
   const handleToggle = () => {
     const checkBox = checkBoxRef.current;
@@ -14,6 +23,8 @@ const ThemeToggle = React.memo(() => {
 
     checkBox.checked = !checkBox.checked;
     setChecked(checkBox.checked);
+
+    localStorage.setItem(LOCAL_STORAGE_THEME_KEY, checkBox.checked ? 'dark' : 'light');
   };
 
   return (
