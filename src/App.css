@@ -1,6 +1,3 @@
-html,
-body,
-#root,
 .App {
   min-height: 720px;
   height: 100vh;
@@ -19,6 +16,14 @@ body,
   border: 2px solid #e31b6d !important;
 }
 
+.dark .border-bottom-3px {
+  border-bottom: 3px solid #e31b6d !important;
+}
+
 .light .border-theme {
   border: 2px solid #1ce492 !important;
+}
+
+.light .border-bottom-3px {
+  border-bottom: 3px solid #1ce492 !important;
 }
