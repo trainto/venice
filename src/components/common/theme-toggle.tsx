@@ -1,36 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import './theme-toggle.css';
-
-const LOCAL_STORAGE_THEME_KEY = 'theme';
+import Store from '../../store';
 
 const ThemeToggle = React.memo(() => {
-  const [checked, setChecked] = useState(false);
-
-  const checkBoxRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const theme = localStorage.getItem(LOCAL_STORAGE_THEME_KEY);
-    if (theme === 'dark') {
-      setChecked(true);
-    }
-  }, []);
+  const store = Store.useStore();
 
   const handleToggle = () => {
-    const checkBox = checkBoxRef.current;
-    if (!checkBox) {
-      return;
-    }
-
-    checkBox.checked = !checkBox.checked;
-    setChecked(checkBox.checked);
-
-    localStorage.setItem(LOCAL_STORAGE_THEME_KEY, checkBox.checked ? 'dark' : 'light');
+    store.switchTheme();
   };
 
   return (
     <div className="d-inline-block position-relative" style={{ cursor: 'pointer' }} onClick={handleToggle}>
-      <input type="checkbox" className="d-none" ref={checkBoxRef} />
-
       <div style={{ width: 50, height: 24, borderRadius: 50, backgroundColor: '#0f1114' }}>
         <div className="position-absolute text-center w-100 h-100" style={{ left: 0, top: 0 }}>
           <img
@@ -49,7 +29,7 @@ const ThemeToggle = React.memo(() => {
             style={{ verticalAlign: 'inherit', marginTop: '4px' }}
           />
         </div>
-        <div className={`thumb ${checked ? 'checked' : ''}`} />
+        <div className={`thumb ${store.theme === 'dark' ? 'checked' : ''}`} />
       </div>
     </div>
   );

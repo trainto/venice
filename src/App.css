@@ -5,3 +5,12 @@ body,
   min-height: 720px;
   height: 100vh;
 }
+
+.dark {
+  background-color: #282c35;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.dark hr {
+  background-color: rgba(255, 255, 255, 0.3);
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from './footer';
-import './layout.css';
 import ThemeToggle from './theme-toggle';
+import './layout.css';
 
 const Layout = React.memo(() => {
   return (
