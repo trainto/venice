@@ -1,0 +1,2 @@
+.thumb{position:absolute;width:22px;height:22px;background-color:#fafafa;border-radius:50%;top:1px;left:1px;transition:all .5s cubic-bezier(.23,1,.32,1) 0ms;transform:translateX(0)}.thumb.checked{transform:translateX(26px)}#layout{width:960px}#root,.App,body,html{min-height:720px;height:100vh}.dark{background-color:#282c35;color:hsla(0,0%,100%,.88)}.dark hr{background-color:hsla(0,0%,100%,.3)}
+/*# sourceMappingURL=main.cc58dda9.chunk.css.map */
