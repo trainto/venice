@@ -11,7 +11,7 @@ export interface Word {
   magic?: string;
 }
 
-export const doInterval = (words: Word[], level: number, height: number): Word[] => {
+export const doInterval = (words: Word[], level: number, height: number): [Word[], number] => {
   // Push down the words
   const offset = Math.floor(height / ROW_COUNT);
   let i = 0;
@@ -20,9 +20,10 @@ export const doInterval = (words: Word[], level: number, height: number): Word[]
     words[i].top += offset;
   }
 
-  // Remove words hit the bottom
+  // Remove words hit the bottom and calc damage
   // TODO: Need bottom margin
   const filteredWords = words.filter((word) => word.top < height);
+  const damage = filteredWords.length - words.length;
 
   // Insert a new word
   const newWord: Word = { word: '', top: 0 };
@@ -37,7 +38,7 @@ export const doInterval = (words: Word[], level: number, height: number): Word[]
     newWord.right = horizontalOffset;
   }
 
-  return [...filteredWords, newWord];
+  return [[...filteredWords, newWord], damage];
 };
 
 export const checkHit = (words: Word[], input: string): Word[] | null => {

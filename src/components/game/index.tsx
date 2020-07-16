@@ -6,6 +6,9 @@ import Input from './input';
 
 const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
+  const [damage, setDamage] = useState(0);
+
+  const scoreRef = useRef(0);
 
   const heightDivRef = useRef<HTMLDivElement>(null);
   const heightRef = useRef<number>(0);
@@ -20,13 +23,17 @@ const Game = React.memo(() => {
   }, []);
 
   useInterval(() => {
-    const newWords = doInterval(words, 1, heightRef.current);
+    const [newWords, damage] = doInterval(words, 1, heightRef.current);
     setWords(newWords);
+    setDamage((prev) => prev + damage);
   }, 1500);
 
   const handleInput = (input: string) => {
     const result = checkHit(words, input);
     if (result) {
+      if (scoreRef.current !== null) {
+        scoreRef.current = scoreRef.current + 10;
+      }
       setWords(result);
     }
   };
