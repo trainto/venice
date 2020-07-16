@@ -2,5 +2,6 @@ html,
 body,
 #root,
 .App {
+  min-height: 720px;
   height: 100vh;
 }
