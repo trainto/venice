@@ -14,3 +14,11 @@ body,
 .dark hr {
   background-color: rgba(255, 255, 255, 0.3);
 }
+
+.dark .border-theme {
+  border: 2px solid #e31b6d !important;
+}
+
+.light .border-theme {
+  border: 2px solid #1ce492 !important;
+}

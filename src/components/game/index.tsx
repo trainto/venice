@@ -3,6 +3,7 @@ import { useInterval } from '../../lib/custom-hooks';
 import { doInterval, Word, checkHit } from '../../lib/game-engine';
 import WordRainDrop from './word-raindrop';
 import Input from './input';
+import ScoreBorad from './score-board';
 
 const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
@@ -32,6 +33,7 @@ const Game = React.memo(() => {
     const result = checkHit(words, input);
     if (result) {
       if (scoreRef.current !== null) {
+        // TODO: Need score policy
         scoreRef.current = scoreRef.current + 10;
       }
       setWords(result);
@@ -40,6 +42,8 @@ const Game = React.memo(() => {
 
   return (
     <div className="h-100 position-relative" ref={heightDivRef}>
+      <ScoreBorad score={scoreRef.current} />
+
       {words.map((word, i) => (
         <WordRainDrop key={i} {...word} />
       ))}
