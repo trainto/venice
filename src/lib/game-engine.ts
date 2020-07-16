@@ -1,0 +1,53 @@
+import { ko2 } from './dict';
+
+const ROW_COUNT = 15;
+const WIDTH = 960; // Make sure this value changes, layout css should be changed
+
+export interface Word {
+  word: string;
+  top: number;
+  left?: number;
+  right?: number;
+  magic?: string;
+}
+
+export const doInterval = (words: Word[], level: number, height: number): Word[] => {
+  // Push down the words
+  const offset = Math.floor(height / ROW_COUNT);
+  let i = 0;
+  const len = words.length;
+  for (; i < len; i += 1) {
+    words[i].top += offset;
+  }
+
+  // Remove words hit the bottom
+  // TODO: Need bottom margin
+  const filteredWords = words.filter((word) => word.top < height);
+
+  // Insert a new word
+  const newWord: Word = { word: '', top: 0 };
+  // TODO: Pick a word as level
+  const wordRandomIndex = Math.floor(Math.random() * ko2.length);
+  newWord.word = ko2[wordRandomIndex];
+
+  const horizontalOffset = Math.floor(Math.random() * (WIDTH / 2));
+  if (Math.random() * 2 < 1) {
+    newWord.left = horizontalOffset;
+  } else {
+    newWord.right = horizontalOffset;
+  }
+
+  return [...filteredWords, newWord];
+};
+
+export const checkHit = (words: Word[], input: string): Word[] | null => {
+  let i = 0;
+  const len = words.length;
+  for (; i < len; i += 1) {
+    if (words[i].word === input) {
+      return [...words.slice(0, i), ...words.slice(i + 1)];
+    }
+  }
+
+  return null;
+};

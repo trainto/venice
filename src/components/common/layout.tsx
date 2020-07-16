@@ -2,6 +2,7 @@ import React from 'react';
 import Footer from './footer';
 import ThemeToggle from './theme-toggle';
 import './layout.css';
+import Game from '../game';
 
 const Layout = React.memo(() => {
   return (
@@ -10,7 +11,9 @@ const Layout = React.memo(() => {
         <ThemeToggle />
       </div>
 
-      <div style={{ height: '85%' }}>Content</div>
+      <div style={{ height: '85%' }}>
+        <Game />
+      </div>
 
       <Footer />
     </div>
