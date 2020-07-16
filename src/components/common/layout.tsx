@@ -1,8 +1,8 @@
 import React from 'react';
 import Footer from './footer';
 import ThemeToggle from './theme-toggle';
+import AsyncComponent from './async-component';
 import './layout.css';
-import Game from '../game';
 
 const Layout = React.memo(() => {
   return (
@@ -12,7 +12,7 @@ const Layout = React.memo(() => {
       </div>
 
       <div style={{ height: '85%' }}>
-        <Game />
+        <AsyncComponent getComponent={() => import('../game')} />
       </div>
 
       <Footer />
