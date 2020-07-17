@@ -3,6 +3,8 @@ import { ko2 } from './dict';
 const ROW_COUNT = 15;
 const WIDTH = 960; // Make sure this value changes, layout css should be changed
 
+export const MAX_DAMAGE = -12;
+
 export interface Word {
   word: string;
   top: number;

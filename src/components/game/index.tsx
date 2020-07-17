@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useInterval } from '../../lib/custom-hooks';
-import { doInterval, Word, checkHit } from '../../lib/game-engine';
+import { doInterval, Word, checkHit, MAX_DAMAGE } from '../../lib/game-engine';
 import WordRainDrop from './word-raindrop';
 import Input from './input';
 import ScoreBorad from './score-board';
@@ -9,6 +9,7 @@ import './game-screen.css';
 
 const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
+  const [running, setRunning] = useState(true);
 
   const damageRef = useRef(0);
   const scoreRef = useRef(0);
@@ -25,13 +26,20 @@ const Game = React.memo(() => {
     heightRef.current = div.clientHeight;
   }, []);
 
-  useInterval(() => {
-    const [newWords, damage] = doInterval(words, 1, heightRef.current);
-    if (damageRef.current !== null) {
-      damageRef.current += damage;
-    }
-    setWords(newWords);
-  }, 1500);
+  useInterval(
+    () => {
+      const [newWords, damage] = doInterval(words, 1, heightRef.current);
+      if (damageRef.current !== null) {
+        damageRef.current += damage;
+
+        if (damageRef.current === MAX_DAMAGE) {
+          setRunning(false);
+        }
+      }
+      setWords(newWords);
+    },
+    running ? 1500 : null
+  );
 
   const handleInput = useCallback(
     (input: string) => {
