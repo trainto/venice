@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
 .App {
   min-height: 720px;
   height: 100vh;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .dark {
