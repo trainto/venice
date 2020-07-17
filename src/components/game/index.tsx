@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useInterval } from '../../lib/custom-hooks';
 import { doInterval, Word, checkHit } from '../../lib/game-engine';
 import WordRainDrop from './word-raindrop';
@@ -29,16 +29,19 @@ const Game = React.memo(() => {
     setDamage((prev) => prev + damage);
   }, 1500);
 
-  const handleInput = (input: string) => {
-    const result = checkHit(words, input);
-    if (result) {
-      if (scoreRef.current !== null) {
-        // TODO: Need score policy
-        scoreRef.current = scoreRef.current + 10;
+  const handleInput = useCallback(
+    (input: string) => {
+      const result = checkHit(words, input);
+      if (result) {
+        if (scoreRef.current !== null) {
+          // TODO: Need score policy
+          scoreRef.current = scoreRef.current + 10;
+        }
+        setWords(result);
       }
-      setWords(result);
-    }
-  };
+    },
+    [words]
+  );
 
   return (
     <div className="h-100 position-relative" ref={heightDivRef}>

@@ -10,7 +10,7 @@ const RANKING_MOCK = [
   { name: 'Hakjoon', score: 999 },
 ];
 
-const Menu = () => {
+const Menu = React.memo(() => {
   const store = Store.useStore();
 
   return (
@@ -65,6 +65,6 @@ const Menu = () => {
       <div style={{ height: '20%' }}>Adsense</div>
     </div>
   );
-};
+});
 
 export default Menu;
