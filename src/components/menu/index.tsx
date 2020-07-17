@@ -15,9 +15,9 @@ const Menu = React.memo(() => {
 
   return (
     <div className="h-100">
-      <div style={{ height: '40%' }}>Image</div>
+      <div style={{ height: '35%' }}>Image</div>
 
-      <div style={{ height: '40%' }}>
+      <div style={{ height: '45%' }}>
         <div className="container-fluid">
           <div className="row pt-3">
             <div className="col-6 text-center align-self-center">
