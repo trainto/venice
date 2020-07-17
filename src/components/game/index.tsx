@@ -5,6 +5,7 @@ import WordRainDrop from './word-raindrop';
 import Input from './input';
 import ScoreBorad from './score-board';
 import Blocks from './blocks';
+import './game-screen.css';
 
 const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
@@ -54,10 +55,12 @@ const Game = React.memo(() => {
         <WordRainDrop key={i} {...word} />
       ))}
 
-      <div className="position-absolute" style={{ width: 300, bottom: 0, left: '50%', marginLeft: -150 }}>
+      <div className="position-absolute" style={{ width: 300, bottom: 0, left: '50%', marginLeft: -150, zIndex: 1010 }}>
         <Input onEnter={handleInput} />
         <Blocks damage={damageRef.current} />
       </div>
+
+      <div className="position-absolute w-100" id="wave" style={{ bottom: 0, height: 20, zIndex: 1000 }} />
     </div>
   );
 });

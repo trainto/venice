@@ -33,18 +33,6 @@ const Input = React.memo(({ onEnter }: { onEnter: (input: string) => void }) => 
           }
         }}
       />
-      <div className="input-group-append">
-        <button
-          className="btn btn-outline-secondary"
-          type="button"
-          onClick={() => {
-            onEnter(value);
-            setValue('');
-          }}
-        >
-          Enter
-        </button>
-      </div>
     </div>
   );
 });
