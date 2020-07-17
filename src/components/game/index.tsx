@@ -4,11 +4,12 @@ import { doInterval, Word, checkHit } from '../../lib/game-engine';
 import WordRainDrop from './word-raindrop';
 import Input from './input';
 import ScoreBorad from './score-board';
+import Blocks from './blocks';
 
 const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
-  const [damage, setDamage] = useState(0);
 
+  const damageRef = useRef(0);
   const scoreRef = useRef(0);
 
   const heightDivRef = useRef<HTMLDivElement>(null);
@@ -25,8 +26,10 @@ const Game = React.memo(() => {
 
   useInterval(() => {
     const [newWords, damage] = doInterval(words, 1, heightRef.current);
+    if (damageRef.current !== null) {
+      damageRef.current += damage;
+    }
     setWords(newWords);
-    setDamage((prev) => prev + damage);
   }, 1500);
 
   const handleInput = useCallback(
@@ -51,8 +54,9 @@ const Game = React.memo(() => {
         <WordRainDrop key={i} {...word} />
       ))}
 
-      <div className="position-absolute" style={{ bottom: 0 }}>
+      <div className="position-absolute" style={{ width: 300, bottom: 0, left: '50%', marginLeft: -150 }}>
         <Input onEnter={handleInput} />
+        <Blocks damage={damageRef.current} />
       </div>
     </div>
   );

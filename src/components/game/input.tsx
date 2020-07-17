@@ -11,7 +11,7 @@ const Input = React.memo(({ onEnter }: { onEnter: (input: string) => void }) => 
   };
 
   return (
-    <div className="input-group mb-3">
+    <div className="input-group">
       <input
         type="text"
         className="form-control"

@@ -22,14 +22,19 @@ const Menu = React.memo(() => {
           <div className="row pt-3">
             <div className="col-6 text-center align-self-center">
               <div>
-                <Link to="game" className={`btn btn-${store.theme} border-theme`} role="button" style={{ width: 200 }}>
+                <Link
+                  to="game"
+                  className={`btn btn-${store.theme} border-theme-2px`}
+                  role="button"
+                  style={{ width: 200 }}
+                >
                   시작
                 </Link>
               </div>
               <div className="mt-3">
                 <Link
                   to="options"
-                  className={`btn btn-${store.theme} border-theme`}
+                  className={`btn btn-${store.theme} border-theme-2px`}
                   role="button"
                   style={{ width: 200 }}
                 >
@@ -39,7 +44,7 @@ const Menu = React.memo(() => {
               <div className="mt-3">
                 <Link
                   to="rankings"
-                  className={`btn btn-${store.theme} border-theme`}
+                  className={`btn btn-${store.theme} border-theme-2px`}
                   role="button"
                   style={{ width: 200 }}
                 >
