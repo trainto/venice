@@ -1,3 +1,20 @@
+.blocks {
+  background-color: #eee;
+  background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),
+    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
 .block {
   height: 40px;
+}
+
+.broken {
+  background:
+    linear-gradient(-45deg, gray 25%, transparent 25%, transparent 75%, black 75%, black) 0 0,
+    linear-gradient(-45deg, black 25%, transparent 25%, transparent 75%, gray 75%, gray) 1em 1em,
+    linear-gradient(45deg, black 17%, transparent 17%, transparent 25%, black 25%, black 36%, transparent 36%, transparent 64%, black 64%, black 75%, transparent 75%, transparent 83%, black 83%) 1em 1em;
+  background-color: gray;
+  background-size: 1em 1em;
 }
