@@ -16,7 +16,9 @@ const Menu = React.memo(() => {
 
   return (
     <div className="h-100">
-      <div style={{ height: '35%' }}>Image</div>
+      <div className="text-center" style={{ height: '35%' }}>
+        <img className="rounded h-75" src={require('../../assets/typing.gif')} alt="Typing animation" />
+      </div>
 
       <div style={{ height: '45%' }}>
         <div className="container-fluid">
