@@ -25,7 +25,7 @@ const createStore = <T extends Record<string, unknown>>(useHook: () => T, storeN
 };
 
 const useGlobal = () => {
-  const [theme, setTheme] = useState<Theme>((localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme) || 'light');
+  const [theme, setTheme] = useState<Theme>((localStorage.getItem(LOCAL_STORAGE_THEME_KEY) as Theme) || 'dark');
 
   const switchTheme = () => {
     let tempTheme = theme;
