@@ -1,28 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Store from '../../store';
 import Adsense from '../common/adsense';
-import { API } from '../../lib/api';
-
-const RANKING_MOCK = [
-  { name: 'Hakjoon', score: 1100 },
-  { name: 'Hakjoon', score: 1000 },
-  { name: 'Hakjoon', score: 999 },
-  { name: 'Hakjoon', score: 999 },
-  { name: 'Hakjoon', score: 999 },
-];
+import TopRankins from './top-rankings';
 
 const Menu = React.memo(() => {
   const store = Store.useStore();
-
-  useEffect(() => {
-    const fetchRankings = async () => {
-      const res = await API.getRankins({ lang: 'ko', limit: 5 });
-      console.log(res);
-    };
-
-    fetchRankings();
-  }, []);
 
   return (
     <div className="h-100">
@@ -67,14 +50,7 @@ const Menu = React.memo(() => {
             </div>
 
             <div className="col-6 border-left text-center">
-              <div className="d-inline-block mx-auto border-bottom-3px">
-                <h4>최고 득점자</h4>
-              </div>
-              {RANKING_MOCK.map((ranking, i) => (
-                <div key={i} className="mt-3">
-                  #{i + 1} {ranking.name}: {ranking.score}
-                </div>
-              ))}
+              <TopRankins />
             </div>
           </div>
         </div>
