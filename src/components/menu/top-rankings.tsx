@@ -21,8 +21,10 @@ const TopRankins = React.memo(() => {
         <h4>최고 득점자</h4>
       </div>
       {rankins.map((ranking, i) => (
-        <div key={i} className="mt-3">
-          #{i + 1} {ranking.name}: {ranking.score}
+        <div key={i} className="row justify-content-around mt-3">
+          <div className="col-3 text-right">#{i + 1}</div>
+          <div className="col-5 text-center text-truncate">{ranking.name}</div>
+          <div className="col-4 text-center">{ranking.score.toLocaleString()}</div>
         </div>
       ))}
     </>
