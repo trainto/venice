@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Store from '../../store';
 import Adsense from '../common/adsense';
+import { API } from '../../lib/api';
 
 const RANKING_MOCK = [
   { name: 'Hakjoon', score: 1100 },
@@ -13,6 +14,15 @@ const RANKING_MOCK = [
 
 const Menu = React.memo(() => {
   const store = Store.useStore();
+
+  useEffect(() => {
+    const fetchRankings = async () => {
+      const res = await API.getRankins({ lang: 'ko', limit: 5 });
+      console.log(res);
+    };
+
+    fetchRankings();
+  }, []);
 
   return (
     <div className="h-100">

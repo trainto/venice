@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 
-const BASE_URL = 'https://api.trainto.me/venice';
+const BASE_URL = window.location.hostname === 'localhost' ? '/venice' : 'https://api.trainto.me/venice';
 
 interface Res<T> {
   ok: boolean;
