@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Store from '../../store';
+import Adsense from '../common/adsense';
 
 const RANKING_MOCK = [
   { name: 'Hakjoon', score: 1100 },
@@ -67,7 +68,9 @@ const Menu = React.memo(() => {
         </div>
       </div>
 
-      <div style={{ height: '20%' }}>Adsense</div>
+      <div className="pt-2 text-center" style={{ height: '20%' }}>
+        <Adsense slot="9105371896" style={{ display: 'inline-block', width: '720px', height: '120px' }} />
+      </div>
     </div>
   );
 });
