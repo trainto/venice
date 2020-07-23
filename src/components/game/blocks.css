@@ -1,22 +1,13 @@
 .blocks {
-  /* background-color: #eee;
-  background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black),
-    linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px; */
   background-color: #c33213;
   background-image: url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg id='Page-1' fill='none' fill-rule='evenodd'%3E%3Cg id='brick-wall' fill='%23ffffff' fill-opacity='0.62'%3E%3Cpath d='M0 0h42v44H0V0zm1 1h40v20H1V1zM0 23h20v20H0V23zm22 0h20v20H22V23z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .block {
-  height: 40px;
+  height: 35px;
 }
 
 .broken {
-  background:
-    linear-gradient(-45deg, gray 25%, transparent 25%, transparent 75%, black 75%, black) 0 0,
-    linear-gradient(-45deg, black 25%, transparent 25%, transparent 75%, gray 75%, gray) 1em 1em,
-    linear-gradient(45deg, black 17%, transparent 17%, transparent 25%, black 25%, black 36%, transparent 36%, transparent 64%, black 64%, black 75%, transparent 75%, transparent 83%, black 83%) 1em 1em;
-  background-color: gray;
-  background-size: 1em 1em;
+  background-color: #838383;
+  background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fdfcfd' fill-opacity='0.74' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
 }
