@@ -22,7 +22,17 @@ const TopRankins = React.memo(() => {
       </div>
       {rankins.map((ranking, i) => (
         <div key={i} className="row justify-content-around mt-3">
-          <div className="col-3 text-right">#{i + 1}</div>
+          <div className="col-3 text-right">
+            {i === 0 ? (
+              <img
+                src={require('../../assets/crown.png')}
+                className="align-bottom mr-1"
+                alt="crown"
+                style={{ width: '1.5rem' }}
+              />
+            ) : null}
+            #{i + 1}
+          </div>
           <div className="col-5 text-center text-truncate">{ranking.name}</div>
           <div className="col-4 text-center">{ranking.score.toLocaleString()}</div>
         </div>
