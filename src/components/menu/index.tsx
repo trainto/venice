@@ -57,7 +57,7 @@ const Menu = React.memo(() => {
       </div>
 
       <div className="pt-2 text-center" style={{ height: '20%' }}>
-        <Adsense slot="9105371896" style={{ display: 'inline-block', width: '720px', height: '120px' }} />
+        <Adsense slot="9105371896" style={{ display: 'inline-block', width: '920px', height: '120px' }} />
       </div>
     </div>
   );
