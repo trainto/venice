@@ -3,14 +3,15 @@ import { Link } from 'react-router-dom';
 import Store from '../../store';
 import Adsense from '../common/adsense';
 import TopRankins from './top-rankings';
+import Header from './header';
 
 const Menu = React.memo(() => {
   const store = Store.useStore();
 
   return (
     <div className="h-100">
-      <div className="text-center" style={{ height: '35%' }}>
-        <img className="rounded h-75" src={require('../../assets/typing.gif')} alt="Typing animation" />
+      <div className="text-center" style={{ height: '40%' }}>
+        <Header />
       </div>
 
       <div style={{ height: '45%' }}>
@@ -56,8 +57,8 @@ const Menu = React.memo(() => {
         </div>
       </div>
 
-      <div className="pt-2 text-center" style={{ height: '20%' }}>
-        <Adsense slot="9105371896" style={{ display: 'inline-block', width: '920px', height: '120px' }} />
+      <div className="text-center" style={{ height: '15%' }}>
+        <Adsense slot="9105371896" style={{ display: 'inline-block', width: '920px', height: '96px' }} />
       </div>
     </div>
   );
