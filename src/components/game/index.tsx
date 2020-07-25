@@ -6,6 +6,7 @@ import Input from './input';
 import ScoreBorad from './score-board';
 import Blocks from './blocks';
 import './game-screen.css';
+import Adsense from '../common/adsense';
 
 const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
@@ -69,6 +70,10 @@ const Game = React.memo(() => {
       </div>
 
       <div className="position-absolute w-100" id="wave" style={{ bottom: 0, height: 20, zIndex: 1000 }} />
+
+      <div id="right-ad">
+        <Adsense style={{ display: 'inline-block', width: '160px', height: '600px' }} slot="8494642588" />
+      </div>
     </div>
   );
 });

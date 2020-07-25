@@ -3,12 +3,12 @@ import Footer from './footer';
 import ThemeToggle from './theme-toggle';
 import AsyncComponent from './async-component';
 import { HashRouter, Route } from 'react-router-dom';
-import './layout.css';
 import Menu from '../menu';
+import { WIDTH } from '../../lib/game-engine';
 
 const Layout = React.memo(() => {
   return (
-    <div id="layout" className="pt-3 mx-auto h-100">
+    <div id="layout" className="pt-3 mx-auto h-100" style={{ width: WIDTH }}>
       <div className="text-right" style={{ height: '5%' }}>
         <ThemeToggle />
       </div>
