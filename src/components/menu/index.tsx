@@ -10,7 +10,7 @@ const Menu = React.memo(() => {
 
   return (
     <div className="h-100">
-      <div className="text-center" style={{ height: '40%' }}>
+      <div style={{ height: '40%' }}>
         <Header />
       </div>
 
