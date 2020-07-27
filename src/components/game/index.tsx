@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { useInterval } from '../../lib/custom-hooks';
+import { useInterval, useWindowResized } from '../../lib/custom-hooks';
 import { doInterval, Word, checkHit, MAX_DAMAGE } from '../../lib/game-engine';
 import WordRainDrop from './word-raindrop';
 import Input from './input';
 import ScoreBorad from './score-board';
 import Blocks from './blocks';
-import './game-screen.css';
 import Adsense from '../common/adsense';
+import './game-screen.css';
 
 const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
@@ -18,7 +18,7 @@ const Game = React.memo(() => {
   const heightDivRef = useRef<HTMLDivElement>(null);
   const heightRef = useRef<number>(0);
 
-  useEffect(() => {
+  const calcGameHeight = useCallback(() => {
     const div = heightDivRef.current;
     if (!div) {
       return;
@@ -26,6 +26,14 @@ const Game = React.memo(() => {
 
     heightRef.current = div.clientHeight;
   }, []);
+
+  useEffect(() => {
+    calcGameHeight();
+  }, [calcGameHeight]);
+
+  useWindowResized(() => {
+    calcGameHeight();
+  });
 
   useInterval(
     () => {

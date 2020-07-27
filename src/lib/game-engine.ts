@@ -7,6 +7,7 @@ export const MAX_DAMAGE = -12;
 
 export interface Word {
   word: string;
+  row: number;
   top: number;
   left?: number;
   right?: number;
@@ -19,7 +20,8 @@ export const doInterval = (words: Word[], level: number, height: number): [Word[
   let i = 0;
   const len = words.length;
   for (; i < len; i += 1) {
-    words[i].top += offset;
+    words[i].row += 1;
+    words[i].top = words[i].row * offset;
   }
 
   // Remove words hit the bottom and calc damage
@@ -28,7 +30,7 @@ export const doInterval = (words: Word[], level: number, height: number): [Word[
   const damage = filteredWords.length - words.length;
 
   // Insert a new word
-  const newWord: Word = { word: '', top: 0 };
+  const newWord: Word = { word: '', row: 0, top: 0 };
   // TODO: Pick a word as level
   const wordRandomIndex = Math.floor(Math.random() * ko2.length);
   newWord.word = ko2[wordRandomIndex];
