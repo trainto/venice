@@ -8,29 +8,32 @@ export const MAX_DAMAGE = -12;
 export interface Word {
   word: string;
   row: number;
-  top: number;
+  boxTop: number;
+  boxBottom?: number;
+  boxRight?: number;
+  boxLeft?: number;
   left?: number;
   right?: number;
   magic?: string;
 }
 
-export const doInterval = (words: Word[], level: number, height: number): [Word[], number] => {
+export const doInterval = (level: number, words: Word[], height: number, bottomMargin: number): [Word[], number] => {
   // Push down the words
   const offset = Math.floor(height / ROW_COUNT);
   let i = 0;
   const len = words.length;
   for (; i < len; i += 1) {
     words[i].row += 1;
-    words[i].top = words[i].row * offset;
+    words[i].boxTop = words[i].row * offset;
   }
 
   // Remove words hit the bottom and calc damage
   // TODO: Need bottom margin
-  const filteredWords = words.filter((word) => word.top < height);
+  const filteredWords = words.filter((word) => (word.boxBottom || word.boxTop) < height - bottomMargin);
   const damage = filteredWords.length - words.length;
 
   // Insert a new word
-  const newWord: Word = { word: '', row: 0, top: 0 };
+  const newWord: Word = { word: '', row: 0, boxTop: 0 };
   // TODO: Pick a word as level
   const wordRandomIndex = Math.floor(Math.random() * ko2.length);
   newWord.word = ko2[wordRandomIndex];

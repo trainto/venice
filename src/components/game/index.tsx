@@ -8,6 +8,8 @@ import Blocks from './blocks';
 import Adsense from '../common/adsense';
 import './game-screen.css';
 
+const BOTTOM_MARGIN = 20;
+
 const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
   const [running, setRunning] = useState(true);
@@ -37,7 +39,7 @@ const Game = React.memo(() => {
 
   useInterval(
     () => {
-      const [newWords, damage] = doInterval(words, 1, heightRef.current);
+      const [newWords, damage] = doInterval(1, words, heightRef.current, BOTTOM_MARGIN);
       if (damageRef.current !== null) {
         damageRef.current += damage;
 
@@ -64,12 +66,21 @@ const Game = React.memo(() => {
     [words]
   );
 
+  const calcBox = (ref: HTMLSpanElement | null, i: number) => {
+    if (ref) {
+      const box = ref.getBoundingClientRect();
+      words[i].boxBottom = box.bottom;
+      words[i].boxLeft = box.left;
+      words[i].boxRight = box.left + box.right;
+    }
+  };
+
   return (
     <div className="h-100 position-relative" ref={heightDivRef}>
       <ScoreBorad score={scoreRef.current} />
 
       {words.map((word, i) => (
-        <WordRainDrop key={i} {...word} />
+        <WordRainDrop key={i} {...word} ref={(ref) => calcBox(ref, i)} />
       ))}
 
       <div className="position-absolute" style={{ width: 300, bottom: 0, left: '50%', marginLeft: -150, zIndex: 1010 }}>
@@ -77,7 +88,7 @@ const Game = React.memo(() => {
         <Blocks damage={damageRef.current} />
       </div>
 
-      <div className="position-absolute w-100" id="wave" style={{ bottom: 0, height: 20, zIndex: 1000 }} />
+      <div className="position-absolute w-100" id="wave" style={{ bottom: 0, height: BOTTOM_MARGIN, zIndex: 1000 }} />
 
       <div id="right-ad">
         <Adsense style={{ display: 'inline-block', width: '160px', height: '600px' }} slot="8494642588" />
