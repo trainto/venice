@@ -5,7 +5,7 @@ interface Props {
   slot: string;
 }
 
-const Adsense = (props: Props) => {
+const Adsense = React.memo((props: Props) => {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const adsbygoogle: any = (window as { adsbygoogle?: unknown }).adsbygoogle || [];
@@ -20,6 +20,6 @@ const Adsense = (props: Props) => {
       data-ad-slot={props.slot}
     />
   );
-};
+});
 
 export default Adsense;
