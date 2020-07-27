@@ -19,27 +19,32 @@ const Game = React.memo(() => {
 
   const heightDivRef = useRef<HTMLDivElement>(null);
   const heightRef = useRef<number>(0);
+  const blockDivRef = useRef<HTMLDivElement>(null);
+  const blockAreaRef = useRef({ top: 0, left: 0, right: 0 });
 
-  const calcGameHeight = useCallback(() => {
-    const div = heightDivRef.current;
-    if (!div) {
+  const calcDamageBoundary = useCallback(() => {
+    const divScreen = heightDivRef.current;
+    const divInput = blockDivRef.current;
+    if (!divScreen || !divInput) {
       return;
     }
 
-    heightRef.current = div.clientHeight;
+    heightRef.current = divScreen.clientHeight;
+    const inputBox = divInput.getBoundingClientRect();
+    blockAreaRef.current = { top: inputBox.top - divScreen.offsetTop, left: inputBox.left, right: inputBox.right };
   }, []);
 
   useEffect(() => {
-    calcGameHeight();
-  }, [calcGameHeight]);
+    calcDamageBoundary();
+  }, [calcDamageBoundary]);
 
   useWindowResized(() => {
-    calcGameHeight();
+    calcDamageBoundary();
   });
 
   useInterval(
     () => {
-      const [newWords, damage] = doInterval(1, words, heightRef.current, BOTTOM_MARGIN);
+      const [newWords, damage] = doInterval(1, words, heightRef.current, blockAreaRef.current, BOTTOM_MARGIN);
       if (damageRef.current !== null) {
         damageRef.current += damage;
 
@@ -68,10 +73,14 @@ const Game = React.memo(() => {
 
   const calcBox = (ref: HTMLSpanElement | null, i: number) => {
     if (ref) {
-      const box = ref.getBoundingClientRect();
-      words[i].boxBottom = box.bottom;
-      words[i].boxLeft = box.left;
-      words[i].boxRight = box.left + box.right;
+      if (!words[i].boxHeight) {
+        const newWords = [...words];
+        const box = ref.getBoundingClientRect();
+        newWords[i].boxHeight = box.height;
+        newWords[i].boxLeft = box.left;
+        newWords[i].boxRight = box.right;
+        setWords(newWords);
+      }
     }
   };
 
@@ -83,7 +92,11 @@ const Game = React.memo(() => {
         <WordRainDrop key={i} {...word} ref={(ref) => calcBox(ref, i)} />
       ))}
 
-      <div className="position-absolute" style={{ width: 300, bottom: 0, left: '50%', marginLeft: -150, zIndex: 1010 }}>
+      <div
+        className="position-absolute"
+        style={{ width: 300, bottom: 0, left: '50%', marginLeft: -150, zIndex: 1010 }}
+        ref={blockDivRef}
+      >
         <Input onEnter={handleInput} />
         <Blocks damage={damageRef.current} />
       </div>

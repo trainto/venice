@@ -9,7 +9,7 @@ export interface Word {
   word: string;
   row: number;
   boxTop: number;
-  boxBottom?: number;
+  boxHeight?: number;
   boxRight?: number;
   boxLeft?: number;
   left?: number;
@@ -17,7 +17,13 @@ export interface Word {
   magic?: string;
 }
 
-export const doInterval = (level: number, words: Word[], height: number, bottomMargin: number): [Word[], number] => {
+export const doInterval = (
+  level: number,
+  words: Word[],
+  height: number,
+  blockArea: { top: number; left: number; right: number },
+  bottomMargin: number
+): [Word[], number] => {
   // Push down the words
   const offset = Math.floor(height / ROW_COUNT);
   let i = 0;
@@ -28,8 +34,22 @@ export const doInterval = (level: number, words: Word[], height: number, bottomM
   }
 
   // Remove words hit the bottom and calc damage
-  // TODO: Need bottom margin
-  const filteredWords = words.filter((word) => (word.boxBottom || word.boxTop) < height - bottomMargin);
+  const filteredWords = words.filter((word) => {
+    const y = word.boxTop + (word.boxHeight || 0);
+    if (y > blockArea.top) {
+      if (word.boxLeft !== undefined && word.boxRight !== undefined) {
+        if (word.boxLeft < blockArea.right && word.boxLeft >= blockArea.left) {
+          return false;
+        }
+
+        if (word.boxRight > blockArea.left && word.boxRight <= blockArea.right) {
+          return false;
+        }
+      }
+    }
+
+    return y < height - bottomMargin;
+  });
   const damage = filteredWords.length - words.length;
 
   // Insert a new word
