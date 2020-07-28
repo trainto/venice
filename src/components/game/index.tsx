@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useInterval, useWindowResized } from '../../lib/custom-hooks';
-import { doInterval, Word, checkHit, MAX_DAMAGE } from '../../lib/game-engine';
+import { doInterval, Word, checkHit, MAX_DAMAGE, LEVEL } from '../../lib/game-engine';
 import WordRainDrop from './word-raindrop';
 import Input from './input';
 import ScoreBorad from './score-board';
@@ -14,7 +14,9 @@ const Game = React.memo(() => {
   const [words, setWords] = useState<Word[]>([]);
   const [running, setRunning] = useState(true);
 
+  const levelRef = useRef(0);
   const damageRef = useRef(0);
+  const hitCountPerLevelRef = useRef(0);
   const scoreRef = useRef(0);
 
   const heightDivRef = useRef<HTMLDivElement>(null);
@@ -44,28 +46,36 @@ const Game = React.memo(() => {
 
   useInterval(
     () => {
-      const [newWords, damage] = doInterval(1, words, heightRef.current, blockAreaRef.current, BOTTOM_MARGIN);
+      const [newWords, damage] = doInterval(
+        levelRef.current,
+        words,
+        heightRef.current,
+        blockAreaRef.current,
+        BOTTOM_MARGIN
+      );
       if (damageRef.current !== null) {
         damageRef.current += damage;
 
-        if (damageRef.current === MAX_DAMAGE) {
+        if (damageRef.current >= MAX_DAMAGE) {
           setRunning(false);
         }
       }
       setWords(newWords);
     },
-    running ? 1500 : null
+    running ? LEVEL[levelRef.current].interval : null
   );
 
   const handleInput = useCallback(
     (input: string) => {
-      const result = checkHit(words, input);
+      const result = checkHit(words, input, levelRef.current, hitCountPerLevelRef.current);
       if (result) {
-        if (scoreRef.current !== null) {
-          // TODO: Need score policy
-          scoreRef.current = scoreRef.current + 10;
+        hitCountPerLevelRef.current += 1;
+        scoreRef.current += result.score;
+        if (result.levelCompleted) {
+          levelRef.current = levelRef.current + 1;
+          hitCountPerLevelRef.current = 0;
         }
-        setWords(result);
+        setWords(result.words);
       }
     },
     [words]

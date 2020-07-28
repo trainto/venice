@@ -1,5 +1,14 @@
 import { ko2 } from './dict';
 
+export const LEVEL: { interval: number; maxHit: number; score: number }[] = [
+  { interval: 1500, maxHit: 20, score: 10 },
+  { interval: 1000, maxHit: 30, score: 20 },
+  { interval: 1000, maxHit: 30, score: 30 },
+  { interval: 1000, maxHit: 30, score: 40 },
+  { interval: 1000, maxHit: 30, score: 50 },
+  { interval: 1000, maxHit: 30, score: 60 },
+];
+
 const ROW_COUNT = 15;
 export const WIDTH = 960;
 
@@ -68,12 +77,21 @@ export const doInterval = (
   return [[...filteredWords, newWord], damage];
 };
 
-export const checkHit = (words: Word[], input: string): Word[] | null => {
+export const checkHit = (
+  words: Word[],
+  input: string,
+  level: number,
+  hitCount: number
+): { levelCompleted: boolean; score: number; words: Word[] } | null => {
   let i = 0;
   const len = words.length;
   for (; i < len; i += 1) {
     if (words[i].word === input) {
-      return [...words.slice(0, i), ...words.slice(i + 1)];
+      const newScore = LEVEL[level].score;
+      if (LEVEL[level].maxHit <= hitCount + 1) {
+        return { levelCompleted: true, score: newScore, words: [] };
+      }
+      return { levelCompleted: false, score: newScore, words: [...words.slice(0, i), ...words.slice(i + 1)] };
     }
   }
 
