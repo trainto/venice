@@ -56,7 +56,7 @@ const Game = React.memo(() => {
       if (damageRef.current !== null) {
         damageRef.current += damage;
 
-        if (damageRef.current >= MAX_DAMAGE) {
+        if (damageRef.current <= MAX_DAMAGE) {
           setRunning(false);
         }
       }
@@ -96,7 +96,7 @@ const Game = React.memo(() => {
 
   return (
     <div className="h-100 position-relative" ref={heightDivRef}>
-      <ScoreBorad score={scoreRef.current} />
+      <ScoreBorad level={levelRef.current} score={scoreRef.current} />
 
       {words.map((word, i) => (
         <WordRainDrop key={i} {...word} ref={(ref) => calcBox(ref, i)} />
