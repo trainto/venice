@@ -1,11 +1,12 @@
-import React, { useRef, CSSProperties } from 'react';
+import React, { useRef, CSSProperties, useState, useEffect, useCallback } from 'react';
 import Store from '../../store';
-import './header.css';
-import { useInterval } from '../../lib/custom-hooks';
+import { useInterval, useWindowResized } from '../../lib/custom-hooks';
 import { isNumber } from 'util';
 import { WIDTH } from '../../lib/game-engine';
 
 const Header = React.memo(() => {
+  const [containerHeight, setContainerHeight] = useState(0);
+
   const store = Store.useStore();
 
   const charsRef = useRef([
@@ -49,8 +50,21 @@ const Header = React.memo(() => {
   ]);
 
   const countRef = useRef(1);
-
+  const containerRef = useRef<HTMLDivElement>(null);
   const divRefs: React.RefObject<HTMLDivElement>[] = charsRef.current.map(() => useRef<HTMLDivElement>(null));
+
+  const calcContainerHeight = useCallback(() => {
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      setContainerHeight(rect.height);
+    }
+  }, []);
+
+  useEffect(() => {
+    calcContainerHeight();
+  }, [calcContainerHeight]);
+
+  useWindowResized(() => calcContainerHeight());
 
   useInterval(() => {
     const candidateIndices = charsRef.current.reduce((memo, char, i) => {
@@ -65,17 +79,23 @@ const Header = React.memo(() => {
 
     if (isNumber(targetIndex) && divRefs[targetIndex].current) {
       charsRef.current[targetIndex].count = countRef.current;
-      divRefs[targetIndex].current?.classList.add('ani');
+      // divRefs[targetIndex].current?.classList.add('ani');
+      const target = divRefs[targetIndex].current;
+      if (target) {
+        target.style.visibility = 'visible';
+        target.style.transform = `translateY(${containerHeight - 30}px)`;
+      }
     }
 
     charsRef.current.forEach((char, i) => {
       if (char.count > 0 && char.count <= countRef.current - 5) {
         char.count = -5;
-        divRefs[i].current?.classList.remove('ani');
         const div = divRefs[i].current;
-        if (div) {
-          const box = div.getBoundingClientRect();
-          div.style.top = `${Math.floor(box.top - 280)}px`;
+        const containerDiv = containerRef.current;
+        if (div && containerDiv) {
+          div.style.top = `${containerDiv.offsetTop}px`;
+          div.style.visibility = 'hidden';
+          div.style.transform = '';
         }
       } else if (char.count < 0) {
         char.count += 1;
@@ -86,9 +106,14 @@ const Header = React.memo(() => {
   }, 1000);
 
   return (
-    <div>
+    <div className="h-100" ref={containerRef}>
       {charsRef.current.map((char, i) => {
-        const style: CSSProperties = { left: '50%', zIndex: 1000 };
+        const style: CSSProperties = {
+          left: '50%',
+          zIndex: 1000,
+          transition: 'transform 5s linear',
+          visibility: 'hidden',
+        };
         const offset = Math.floor(Math.random() * (WIDTH / 2)) - 50;
         if (i % 2 === 0) {
           style.marginLeft = offset;
@@ -96,7 +121,7 @@ const Header = React.memo(() => {
           style.marginLeft = -offset;
         }
         return (
-          <div key={i} className="char position-fixed text-muted" ref={divRefs[i]} style={style}>
+          <div key={i} className="position-fixed text-muted" ref={divRefs[i]} style={style}>
             {char.char}
           </div>
         );
@@ -106,9 +131,9 @@ const Header = React.memo(() => {
         style={{
           fontSize: '5rem',
           textShadow: store.theme === 'dark' ? '5px 5px rgba(255, 255, 255, 0.4)' : '5px 5px rgba(0, 0, 0, 0.4)',
-          paddingTop: '5rem',
           zIndex: 1010,
           position: 'absolute',
+          top: containerHeight / 2,
           left: '50%',
           transform: 'translate(-50%, 0)',
         }}
