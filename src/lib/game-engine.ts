@@ -1,4 +1,4 @@
-import { ko2 } from './dict';
+import { ko } from './dict';
 
 export const LEVEL: { interval: number; maxHit: number; score: number }[] = [
   { interval: 1500, maxHit: 20, score: 10 },
@@ -26,8 +26,21 @@ export interface Word {
   magic?: string;
 }
 
+const getDictPool = (level: number, lang: Lang): string[] => {
+  switch (level) {
+    case 0:
+    case 1:
+      return ko[2];
+    case 3:
+      return [...ko[2], ...ko[3]];
+    default:
+      return [];
+  }
+};
+
 export const doInterval = (
   level: number,
+  lang: Lang,
   words: Word[],
   height: number,
   blockArea: { top: number; left: number; right: number },
@@ -62,10 +75,10 @@ export const doInterval = (
   const damage = filteredWords.length - words.length;
 
   // Insert a new word
+  const wordPool = getDictPool(level, lang);
   const newWord: Word = { word: '', row: 0, boxTop: 0 };
-  // TODO: Pick a word as level
-  const wordRandomIndex = Math.floor(Math.random() * ko2.length);
-  newWord.word = ko2[wordRandomIndex];
+  const wordRandomIndex = Math.floor(Math.random() * wordPool.length);
+  newWord.word = wordPool[wordRandomIndex];
 
   const horizontalOffset = Math.floor(Math.random() * (WIDTH / 2));
   if (Math.random() * 2 < 1) {

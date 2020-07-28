@@ -48,6 +48,7 @@ const Game = React.memo(() => {
     () => {
       const [newWords, damage] = doInterval(
         levelRef.current,
+        'ko',
         words,
         heightRef.current,
         blockAreaRef.current,
