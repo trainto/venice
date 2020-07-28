@@ -7,9 +7,13 @@ interface Props {
 
 const Adsense = React.memo((props: Props) => {
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const adsbygoogle: any = (window as { adsbygoogle?: unknown }).adsbygoogle || [];
-    adsbygoogle.push({});
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const adsbygoogle: any = (window as { adsbygoogle?: unknown }).adsbygoogle || [];
+      adsbygoogle.push({});
+    } catch (_err) {
+      // Do nothing!
+    }
   }, []);
 
   return (
