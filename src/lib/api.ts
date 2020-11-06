@@ -23,7 +23,7 @@ const doFetch = async <T>(path: string, method: 'GET' | 'POST', data?: Record<st
 
   let newPath = path;
   if (method === 'GET' && data) {
-    newPath = path + '?' + queryString.stringify(data);
+    newPath = path + '?' + queryString.stringify(JSON.parse(JSON.stringify(data)));
   }
 
   try {
@@ -54,5 +54,5 @@ export const API = {
   getRankins: (query: { lang: Lang; skip?: number; limit?: number }): Promise<Res<Score[]>> => {
     return doFetch<Score[]>('/rankings', 'GET', query);
   },
-  postScore: (name: string, score: number, lang: Lang) => {},
+  // postScore: (name: string, score: number, lang: Lang) => {},
 };
