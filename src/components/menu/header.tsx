@@ -1,7 +1,6 @@
-import React, { useRef, CSSProperties, useState, useEffect, useCallback } from 'react';
+import React, { useRef, CSSProperties, useState, useEffect, useCallback, createRef } from 'react';
 import Store from '../../store';
 import { useInterval, useWindowResized } from '../../lib/custom-hooks';
-import { isNumber } from 'util';
 import { WIDTH } from '../../lib/game-engine';
 
 const Header = React.memo(() => {
@@ -51,7 +50,7 @@ const Header = React.memo(() => {
 
   const countRef = useRef(1);
   const containerRef = useRef<HTMLDivElement>(null);
-  const divRefs: React.RefObject<HTMLDivElement>[] = charsRef.current.map(() => useRef<HTMLDivElement>(null));
+  const divRefs: React.RefObject<HTMLDivElement>[] = charsRef.current.map(() => createRef<HTMLDivElement>());
 
   const calcContainerHeight = useCallback(() => {
     if (containerRef.current) {
@@ -77,7 +76,7 @@ const Header = React.memo(() => {
 
     const targetIndex = candidateIndices[Math.floor(Math.random() * candidateIndices.length)];
 
-    if (isNumber(targetIndex) && divRefs[targetIndex].current) {
+    if (Number.isInteger(targetIndex) && divRefs[targetIndex].current) {
       charsRef.current[targetIndex].count = countRef.current;
       // divRefs[targetIndex].current?.classList.add('ani');
       const target = divRefs[targetIndex].current;
