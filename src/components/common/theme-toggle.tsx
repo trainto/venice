@@ -1,6 +1,8 @@
 import React from 'react';
 import './theme-toggle.css';
 import Store from '../../store';
+import imgMoon from '../../assets/moon.png';
+import imgSun from '../../assets/sun.png';
 
 const ThemeToggle = React.memo(() => {
   const store = Store.useStore();
@@ -13,15 +15,9 @@ const ThemeToggle = React.memo(() => {
     <div className="d-inline-block position-relative" style={{ cursor: 'pointer' }} onClick={handleToggle}>
       <div style={{ width: 50, height: 24, borderRadius: 50, backgroundColor: '#0f1114' }}>
         <div className="position-absolute text-center w-100 h-100" style={{ left: 0, top: 0 }}>
+          <img src={imgMoon} width={16} height={16} alt="moon" style={{ verticalAlign: 'inherit', marginTop: '4px' }} />
           <img
-            src={require('../../assets/moon.png')}
-            width={16}
-            height={16}
-            alt="moon"
-            style={{ verticalAlign: 'inherit', marginTop: '4px' }}
-          />
-          <img
-            src={require('../../assets/sun.png')}
+            src={imgSun}
             width={16}
             height={16}
             alt="sun"

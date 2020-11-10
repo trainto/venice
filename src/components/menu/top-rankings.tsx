@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { API } from '../../lib/api';
+import imgCrown from '../../assets/crown.png';
 
 const TopRankins = React.memo(() => {
   const [rankins, setRankins] = useState<Score[]>([]);
@@ -24,12 +25,7 @@ const TopRankins = React.memo(() => {
         <div key={i} className="row justify-content-around mt-3">
           <div className="col-3 text-right">
             {i === 0 ? (
-              <img
-                src={require('../../assets/crown.png')}
-                className="align-bottom mr-1"
-                alt="crown"
-                style={{ width: '1.5rem' }}
-              />
+              <img src={imgCrown} className="align-bottom mr-1" alt="crown" style={{ width: '1.5rem' }} />
             ) : null}
             #{i + 1}
           </div>
