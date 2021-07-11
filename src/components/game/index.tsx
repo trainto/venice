@@ -115,7 +115,14 @@ const Game = React.memo(() => {
       <div className="position-absolute w-100" id="wave" style={{ bottom: 0, height: BOTTOM_MARGIN, zIndex: 1000 }} />
 
       <div id="right-ad">
-        <Adsense style={{ display: 'inline-block', width: '160px', height: '600px' }} slot="8494642588" />
+        <Adsense>
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'inline-block', width: '160px', height: '600px' }}
+            data-ad-client="ca-pub-6978978720477594"
+            data-ad-slot="8494642588"
+          />
+        </Adsense>
       </div>
     </div>
   );

@@ -58,7 +58,14 @@ const Menu = React.memo(() => {
       </div>
 
       <div className="text-center" style={{ height: '15%' }}>
-        <Adsense slot="9105371896" style={{ display: 'inline-block', width: '920px', height: '96px' }} />
+        <Adsense>
+          <ins
+            className="adsbygoogle"
+            style={{ display: 'inline-block', width: '920px', height: '96px' }}
+            data-ad-client="ca-pub-6978978720477594"
+            data-ad-slot="9105371896"
+          />
+        </Adsense>
       </div>
     </div>
   );

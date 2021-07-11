@@ -1,29 +1,13 @@
 import React, { useEffect } from 'react';
 
-interface Props {
-  style?: Record<string, unknown>;
-  slot: string;
-}
-
-const Adsense = React.memo((props: Props) => {
+const Adsense = React.memo(({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const adsbygoogle: any = (window as { adsbygoogle?: unknown }).adsbygoogle || [];
-      adsbygoogle.push({});
-    } catch (_err) {
-      // Do nothing!
-    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const adsbygoogle: any = (window as { adsbygoogle?: unknown }).adsbygoogle || [];
+    adsbygoogle.push({});
   }, []);
 
-  return (
-    <ins
-      className="adsbygoogle"
-      style={props.style ? props.style : { display: 'block' }}
-      data-ad-client="ca-pub-6978978720477594"
-      data-ad-slot={props.slot}
-    />
-  );
+  return <>{children}</>;
 });
 
 export default Adsense;
